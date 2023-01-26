@@ -1,6 +1,6 @@
 
 class Casilla():
-    def __init__(self,x,y,color,identificador,colori):
+    def __init__(self,x,y,color,identificador,colori,cellrange):
         self.posicion = [x,y]
         self.arriba = None
         self.abajo = None
@@ -9,6 +9,7 @@ class Casilla():
         self.color = color
         self.identificador = identificador
         self.colori = colori
+        self.cellrange = cellrange
         self.mov = []
     
     def get_posicion(self):
@@ -17,6 +18,5 @@ class Casilla():
     def get_color(self):
         return(self.color)
     def Movments(self):
-        
         return [self.arriba,self.abajo,self.derecha,self.izquierda]
 

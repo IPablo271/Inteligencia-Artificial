@@ -41,24 +41,35 @@ class Analizer():
                 #draw.rectangle([i, j, i+size, j+size], outline=(0, 0, 0))
                 # Agregar el color de la celda a la lista de colores
 
-                if color == (254, 0, 0) or color == (237, 28, 36, 255):
+
+                if color == (254, 0, 0) or color == (237, 28, 36, 255) or color == (253, 0, 0, 255):
                     colori = 3
-                    casillatemp = Casilla(i,j,color,ide,colori)
+                    casillatemp = Casilla(i,j,color,ide,colori,cell_range)
                     self.inicio = casillatemp
                     fila.append(casillatemp)
-                if color == (0 , 255, 1) or color == (34, 177, 76, 255):
+                elif color == (0 , 255, 1) or color == (34, 177, 76, 255) or color == (0 , 255, 1, 255) or color == (1 , 254, 0, 255) or color == (0 , 254, 1, 255) :
                     colori = 2
-                    casillatemp = Casilla(i,j,color,ide,colori)
+                    casillatemp = Casilla(i,j,color,ide,colori,cell_range)
                     self.goal.append(casillatemp)
                     fila.append(casillatemp)
-                if color == (255 , 255, 255):
+                elif color == (255 , 255, 255) or color == (254, 254, 254, 255) or color == (252, 253, 252, 255):
                     colori = 1
-                    casillatemp = Casilla(i,j,color,ide,colori)
+                    casillatemp = Casilla(i,j,color,ide,colori,cell_range)
                     fila.append(casillatemp)
-                else:
+                
+                elif color == (255 , 255, 255, 255):
+                    colori = 1
+                    casillatemp = Casilla(i,j,color,ide,colori,cell_range)
+                    fila.append(casillatemp)
+                
+                elif color == (0, 0, 0) or color == (0, 0, 0, 255) or color == (0, 0, 0, 0):
                     colori= 0
-                    casillatemp = Casilla(i,j,color,ide,colori)
+                    casillatemp = Casilla(i,j,color,ide,colori,cell_range)
                     fila.append(casillatemp)
+
+                else:
+                    print(color)
+                
     
                 
                 ide += 1
@@ -67,7 +78,7 @@ class Analizer():
             self.pixels.append(fila)
         
         im_result = im_result.convert("RGB")
-        im_result.save("imagen_discretizada.jpg")
+        im_result.save("Laboratorio1/imagen_discretizada.jpg")
         self.sizematriz()
 
         #Se guarda la imagen 
@@ -77,13 +88,13 @@ class Analizer():
         for x in range(self.size):
             for y in range(self.size):
                 nodocolor = self.pixels[x][y]
-                if nodocolor.color == (0, 0, 0):
+                if nodocolor.colori == 0:
                     pass 
                 else:
                     if x != 0:
                         nodo = self.pixels[x][y]
                         nodoarriba = self.pixels[x-1][y]
-                        if nodoarriba.color == (0, 0, 0):
+                        if nodoarriba.colori == 0:
                             pass
                         else:
                             nodo.arriba = self.pixels[x-1][y]
@@ -91,7 +102,7 @@ class Analizer():
                     if y != 0:
                         nodo = self.pixels[x][y]
                         nodoizquierda = self.pixels[x][y-1]
-                        if nodoizquierda.color == (0, 0, 0):
+                        if nodoizquierda.colori == 0:
                             pass
                         else:
                             nodo.izquierda = self.pixels[x][y-1] 
@@ -100,7 +111,7 @@ class Analizer():
                         if self.pixels[x+1][y]:
                             nodo = self.pixels[x][y]
                             nodoabajo = self.pixels[x+1][y]
-                            if nodoabajo.color == (0, 0, 0):
+                            if nodoabajo.colori == 0:
                                 pass
                             else:
                                 nodo.abajo = self.pixels[x+1][y]
@@ -111,7 +122,7 @@ class Analizer():
                         if self.pixels[x][y+1]:
                             nodo = self.pixels[x][y]
                             nododrecha = self.pixels[x][y+1]
-                            if nododrecha.color == (0, 0, 0):
+                            if nododrecha.colori == 0:
                                 pass
                             else:
                                 nodo.derecha = self.pixels[x][y+1]
@@ -156,5 +167,19 @@ class Analizer():
         print(self.goal)
     def return_goal(self):
         return (self.goal)
+    def pintar_celdas(self,imagen, rangos, color):
+        im = Image.open(imagen)
+        # creamos una instancia de ImageDraw
+        draw = ImageDraw.Draw(im)
+        # recorremos cada rango de celdas
+        for rango in rangos:
+            x1, y1, x2, y2 = rango
+            # pintamos el rango de celdas
+            draw.rectangle([x1, y1, x2, y2], fill=color)
+
+        # guardamos la imagen
+        im.save(f"{imagen}_pintada.jpg")
+       
+
 
     
