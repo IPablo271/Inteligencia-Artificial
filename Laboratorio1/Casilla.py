@@ -11,6 +11,7 @@ class Casilla():
         self.colori = colori
         self.cellrange = cellrange
         self.mov = []
+        
     
     def get_posicion(self):
         return [self.posicion[0],self.posicion[1]]
@@ -19,4 +20,6 @@ class Casilla():
         return(self.color)
     def Movments(self):
         return [self.arriba,self.abajo,self.derecha,self.izquierda]
+    def __lt__(self, other):
+        return self.posicion[0] < other.posicion[0] and self.posicion[1] < other.posicion[1]
 
