@@ -1,10 +1,9 @@
 from abc import ABC, abstractmethod
 
 class Framework(ABC):
-    def __init__(self,matriz):
-        self.estadoInicial = None
-        self.goal = []
-        self.matriz = matriz
+    def __init__(self,destination,start):
+        self.destination = destination
+        self.start = start
     @abstractmethod
     def actions(self):
         pass
@@ -12,7 +11,7 @@ class Framework(ABC):
     def result(self):
         pass 
     @abstractmethod
-    def goalTest(self):
+    def goalTest(self,nodo):
         pass
     @abstractmethod
     def step_cost(self):

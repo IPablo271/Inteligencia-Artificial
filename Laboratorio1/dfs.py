@@ -2,7 +2,7 @@ from Framework import Framework
 from collections import deque
 
 
-class BFS(Framework):
+class DFS(Framework):
     def __init__(self,destination,start):
         super().__init__(destination,start)
     
@@ -19,12 +19,12 @@ class BFS(Framework):
         return super().path_cost()
     def result(self):
         return super().result()
-    def BFSAlgorithm(self):
-        queue = deque([self.start])
-        parents = {self.start:None}
+    def DFSalgoritmo(self):
+        stack = [self.start]
+        parents = {self.start: None}
 
-        while queue:
-            node = queue.popleft()
+        while stack:
+            node = stack.pop()
             if node is not None:
                 casillaf = self.goalTest(node)
                 if casillaf:
@@ -36,8 +36,10 @@ class BFS(Framework):
                 vecinos = self.actions(node)
                 for vecino in vecinos:
                     if vecino not in parents:
-                        queue.append(vecino)
+                        stack.append(vecino)
                         parents[vecino] = node
+
+        return None
 
     
     
